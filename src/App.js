@@ -1,9 +1,13 @@
 import "./index.css";
+import { Switch, Route } from "react-router-dom";
+import Login from "./pages/Login";
 
 function App() {
   return (
     <div className="App">
-      <div className="bg-purple-500">df</div>
+      <Switch>
+        <Route exact path="/login" component={Login} />
+      </Switch>
     </div>
   );
 }
