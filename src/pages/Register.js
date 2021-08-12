@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
-const Login = () => {
+const Register = () => {
   const {
     register,
     handleSubmit,
@@ -17,6 +17,7 @@ const Login = () => {
     //   .post("https://conduit.productionready.io/api/users/login", loginData, {
     //     headers: {
     //       Accept: "application/json",
+    //       "Content-Type": "application/x-www-form-urlencoded",
     //     },
     //   })
     //   .then((response) => {
@@ -38,17 +39,33 @@ const Login = () => {
     <div className={"grid grid-cols-12  "}>
       <div className={"col-span-6  bg-silver px-5 py-9 rounded-md "}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div
-            className={
-              "flex flex-col align-center justify-center justify-items-center "
-            }
-          >
+          <div className={"flex flex-col align-center justify-center "}>
             <h2
               className={"mt-9.5  mb-10 text-warm-gray text-4xl text-center "}
             >
               {" "}
-              Login
+              Register
             </h2>
+            <label className={"text-left text-base mb-1 text-warm-gray"}>
+              User
+            </label>
+            <input
+              className={
+                " border border-solid border-light-gray py-1.5  rounded-md outline-none mb-5"
+              }
+              {...register("email", {
+                required: true,
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                  message: " required Faild",
+                },
+              })}
+              name="user"
+              type="text"
+            />
+            {errors.email && (
+              <p className="text-red-600 text-sm text-left pt-1 pb-2 "></p>
+            )}
             <label className={"text-left text-base mb-1 text-warm-gray"}>
               Email
             </label>
@@ -93,12 +110,12 @@ const Login = () => {
               Login
             </button>
             <div className={"text-sm text-warm-gray mt-3 font-medium"}>
-              Don't have account?{" "}
+              Already Registered?{" "}
               <a
-                href={"/register"}
+                href={"/login"}
                 className={"ml-1 font-bold cursor-pointer text-warm-gray"}
               >
-                Register Now
+                Login
               </a>
             </div>
           </div>
@@ -108,4 +125,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
