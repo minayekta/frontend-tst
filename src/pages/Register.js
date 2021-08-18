@@ -1,5 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import showNotification from "../services/showNotif";
 
 const Register = () => {
   const {
@@ -9,35 +11,38 @@ const Register = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    // let loginData = qs.stringify({
-    //   username: data.email,
-    //   password: data.password,
-    // });
-    // axios
-    //   .post("https://conduit.productionready.io/api/users/login", loginData, {
-    //     headers: {
-    //       Accept: "application/json",
-    //       "Content-Type": "application/x-www-form-urlencoded",
-    //     },
-    //   })
-    //   .then((response) => {
-    //     const Authtoken = response.data.access_token;
-    //     localStorage.setItem("token", Authtoken);
-    //     if (response.status === 200) {
-    //       showNotification("ورود با موفقیت انجام شد.").success();
-    //       history.push("/dashboard");
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     if (error) {
-    //       return showNotification(error).error();
-    //     }
-    //     showNotification("خطای سیستمی رخ داده است.").error();
-    //   });
+    console.log("submit");
+    let RegisterData = {
+      username: data.username,
+      email: data.email,
+      password: data.password,
+    };
+    console.log(RegisterData);
+    try {
+      const { data } = await axios.post(
+        "https://conduit-api-realworld.herokuapp.com/api/users",
+        RegisterData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(data);
+      if (data.status == 200) {
+        showNotification("Register Sucsess").success();
+        // history.push("/all-articles");
+      }
+    } catch (error) {
+      if (error) {
+        return showNotification("Register Failed").error();
+      }
+      showNotification("ERROR").error();
+    }
   };
   return (
     <div className={"grid grid-cols-12  "}>
-      <div className={"col-span-6  bg-silver px-5 py-9 rounded-md "}>
+      <div className={"col-span-3 bg-silver px-5 py-9 rounded-md "}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className={"flex flex-col align-center justify-center "}>
             <h2
@@ -51,16 +56,12 @@ const Register = () => {
             </label>
             <input
               className={
-                " border border-solid border-light-gray py-1.5  rounded-md outline-none mb-5"
+                " border border-solid border-light-gray py-1.5  rounded-md outline-none mb-2"
               }
-              {...register("email", {
+              {...register("username", {
                 required: true,
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                  message: " required Faild",
-                },
               })}
-              name="user"
+              name="username"
               type="text"
             />
             {errors.email && (
@@ -71,7 +72,7 @@ const Register = () => {
             </label>
             <input
               className={
-                " border border-solid border-light-gray py-1.5  rounded-md outline-none mb-5"
+                " border border-solid border-light-gray py-1.5  rounded-md outline-none mb-2"
               }
               {...register("email", {
                 required: true,
@@ -92,7 +93,7 @@ const Register = () => {
 
             <input
               className={
-                "border border-solid border-light-gray py-1.5 rounded-md outline-none  mb-5"
+                "border border-solid border-light-gray py-1.5 rounded-md outline-none  mb-2"
               }
               {...register("password", { required: true })}
               name="password"

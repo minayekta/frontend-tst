@@ -1,5 +1,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import showNotification from "../services/showNotif";
+import { useHistory } from "react-router-dom";
+import { checkAuth } from "../Helper/utility";
 
 const Login = () => {
   const {
@@ -8,35 +12,46 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
+  let history = useHistory();
+
   const onSubmit = async (data) => {
-    // let loginData = qs.stringify({
-    //   username: data.email,
-    //   password: data.password,
-    // });
-    // axios
-    //   .post("https://conduit.productionready.io/api/users/login", loginData, {
-    //     headers: {
-    //       Accept: "application/json",
-    //     },
-    //   })
-    //   .then((response) => {
-    //     const Authtoken = response.data.access_token;
-    //     localStorage.setItem("token", Authtoken);
-    //     if (response.status === 200) {
-    //       showNotification("ورود با موفقیت انجام شد.").success();
-    //       history.push("/dashboard");
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     if (error) {
-    //       return showNotification(error).error();
-    //     }
-    //     showNotification("خطای سیستمی رخ داده است.").error();
-    //   });
+    let loginData = {
+      email: data.email,
+      password: data.password,
+    };
+    axios
+      .post(
+        "https://conduit-api-realworld.herokuapp.com/api/users/login",
+        loginData,
+        {
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.config.xsrfCookieName);
+        console.log(loginData);
+        const Authtoken = response.config.xsrfCookieName;
+        localStorage.setItem("token", Authtoken);
+        let isAuth = checkAuth();
+        if (response.status === 200 && isAuth) {
+          showNotification("Login Sucsses").success();
+          history.push("/all-articles");
+        }
+      })
+      .catch((error) => {
+        if (error) {
+          return showNotification(
+            "Login Failed/ username Or password is invalid"
+          ).error();
+        }
+        showNotification("ERROR").error();
+      });
   };
   return (
     <div className={"grid grid-cols-12  "}>
-      <div className={"col-span-6  bg-silver px-5 py-9 rounded-md "}>
+      <div className={"md:col-span-3 bg-silver px-5 py-9 rounded-md "}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div
             className={
@@ -54,7 +69,7 @@ const Login = () => {
             </label>
             <input
               className={
-                " border border-solid border-light-gray py-1.5  rounded-md outline-none mb-5"
+                " border border-solid border-light-gray py-1.5  rounded-md outline-none mb-2 placeholder-charcoal-gray "
               }
               {...register("email", {
                 required: true,
@@ -67,7 +82,9 @@ const Login = () => {
               type="email"
             />
             {errors.email && (
-              <p className="text-red-600 text-sm text-left pt-1 pb-2 "></p>
+              <p className="text-brik text-sm text-left pt-1 pb-2 ">
+                required Faild
+              </p>
             )}
             <label className={"text-left text-base mb-1 text-warm-gray"}>
               Password
@@ -75,14 +92,15 @@ const Login = () => {
 
             <input
               className={
-                "border border-solid border-light-gray py-1.5 rounded-md outline-none  mb-5"
+                "border border-solid border-light-gray py-1.5 rounded-md outline-none  mb-2"
               }
               {...register("password", { required: true })}
               name="password"
               type="password"
+              min="8"
             />
             {errors.password && (
-              <p className="text-red-600 text-sm text-left pt-1 pb-2 ">
+              <p className="text-brik text-sm text-left pt-1  ">
                 Required Faild
               </p>
             )}
