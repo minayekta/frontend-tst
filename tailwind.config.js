@@ -17,6 +17,7 @@ module.exports = {
         brik: "#d9534f",
         silver: "#eceeef",
         "light-gray": "#dddddd",
+        "arvan-green": "#4b713d",
       },
     },
   },
