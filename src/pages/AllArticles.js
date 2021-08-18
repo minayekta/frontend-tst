@@ -1,9 +1,11 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Modal from "../components/Modal";
-const AllArticles = () => {
+
+const AllArticles = ({ color }) => {
   const [showModal, setShowModal] = useState(false);
   const [allarticles, setallarticles] = useState([]);
+
   useEffect(() => {
     axios
       .get("https://conduit-api-realworld.herokuapp.com/api/articles")
@@ -15,9 +17,11 @@ const AllArticles = () => {
         console.log(error);
       });
   }, []);
+
   return (
     <div className={"border-red-800"}>
       {/* {showModal ? <Modal /> : null} */}
+
       <div>
         <h1 className={"text-3xl ml-4 mt-4 mb-4"}>All Posts</h1>
       </div>
@@ -31,7 +35,7 @@ const AllArticles = () => {
       </div>
       {allarticles.map((item, id) => {
         return (
-          <div className={"grid grid-cols-12  m-4 mt-0"}>
+          <div className={"grid grid-cols-12  m-4 mt-0"} key={id}>
             <div
               className={"col-span-1 text-sm font-medium text-charcoal-gray"}
             >
@@ -60,13 +64,35 @@ const AllArticles = () => {
               {item.body}
             </div>
             <div
-              className={"col-span-3 text-sm font-medium text-charcoal-gray"}
+              className={"col-span-2 text-sm font-medium text-charcoal-gray"}
             >
               {item.createdAt}
               <button
                 className={"bg-water-blue"}
                 onClick={() => setShowModal(true)}
               ></button>
+            </div>
+
+            <div
+              className={"col-span-1 text-sm font-medium text-charcoal-gray"}
+            >
+              <select
+                type=""
+                className={
+                  " w-20  text-center  px-2 py-1 text-sm text-white bg-dark-sky-blue  rounded-md outline-none"
+                }
+              >
+                <option
+                  className={"bg-white text-charcoal-gray"}
+                  value=""
+                  onClick={(e) => console.log("Ediiiit", e)}
+                >
+                  Edit{" "}
+                </option>
+                <option className={"bg-white text-charcoal-gray"} value="">
+                  Delete{" "}
+                </option>
+              </select>
             </div>
           </div>
         );

@@ -6,7 +6,7 @@ const Header = () => {
   //   axios
   //     .get("https://conduit-api-realworld.herokuapp.com/api/user")
   //     .then((res) => {
-  //       console.log(res);
+  //       console.log("res", res);
   //       setCurrentuser(res);
   //     })
   //     .catch((error) => {

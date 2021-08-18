@@ -29,7 +29,7 @@ const Register = () => {
         }
       );
       console.log(data);
-      if (data.status == 200) {
+      if (data.status === 200) {
         showNotification("Register Sucsess").success();
         // history.push("/all-articles");
       }
