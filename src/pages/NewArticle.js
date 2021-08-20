@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import showNotification from "../services/showNotif";
-
+import API from "../Helper/Routes/api";
 const NewArticle = () => {
   const {
     register,
@@ -18,17 +18,14 @@ const NewArticle = () => {
       tagList: data.tagList,
     };
     axios
-      .post(
-        "https://conduit-api-realworld.herokuapp.com/api/articles",
-        NewArticleData,
-        {
-          headers: {
-            Accept: "application/json",
-          },
-        }
-      )
+      .post(API.newArticle, NewArticleData, {
+        headers: {
+          Accept: "application/json",
+        },
+      })
       .then((response) => {
         console.log(response);
+        showNotification("Well done! Article created succesfully").success();
       })
       .catch((error) => {
         if (error) {

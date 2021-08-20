@@ -51,11 +51,11 @@ const Login = () => {
   };
   return (
     <div className={"grid grid-cols-12  "}>
-      <div className={"md:col-span-3 bg-silver px-5 py-9 rounded-md "}>
+      <div className={"col-span-3 bg-silver px-5 py-9 rounded-md mx-auto"}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div
             className={
-              "flex flex-col align-center justify-center justify-items-center "
+              "flex flex-col align-center justify-center justify-items-center"
             }
           >
             <h2
@@ -69,7 +69,7 @@ const Login = () => {
             </label>
             <input
               className={
-                " border border-solid border-light-gray py-1.5  rounded-md outline-none mb-2 placeholder-charcoal-gray "
+                " border border-solid pl-2 border-light-gray py-1.5  rounded-md outline-none mb-2 placeholder-charcoal-gray "
               }
               {...register("email", {
                 required: true,
@@ -92,7 +92,7 @@ const Login = () => {
 
             <input
               className={
-                "border border-solid border-light-gray py-1.5 rounded-md outline-none  mb-2"
+                "border border-solid pl-2 border-light-gray py-1.5 rounded-md outline-none  mb-2"
               }
               {...register("password", { required: true })}
               name="password"
@@ -105,7 +105,7 @@ const Login = () => {
               </p>
             )}
             <button
-              className={`bg-water-blue text-white py-2 mt-5 rounded-md focus:outline-none`}
+              className={`bg-water-blue text-white py-2 mt-5 rounded-md focus:outline-none hover:shadow-md`}
               type="submit"
             >
               Login

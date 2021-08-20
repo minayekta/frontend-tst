@@ -56,7 +56,7 @@ const Register = () => {
             </label>
             <input
               className={
-                " border border-solid border-light-gray py-1.5  rounded-md outline-none mb-2"
+                " border border-solid pl-2 border-light-gray py-1.5  rounded-md outline-none mb-2"
               }
               {...register("username", {
                 required: true,
@@ -72,7 +72,7 @@ const Register = () => {
             </label>
             <input
               className={
-                " border border-solid border-light-gray py-1.5  rounded-md outline-none mb-2"
+                " border border-solid pl-2 border-light-gray py-1.5  rounded-md outline-none mb-2"
               }
               {...register("email", {
                 required: true,
@@ -93,7 +93,7 @@ const Register = () => {
 
             <input
               className={
-                "border border-solid border-light-gray py-1.5 rounded-md outline-none  mb-2"
+                "border border-solid pl-2 border-light-gray py-1.5 rounded-md outline-none  mb-2"
               }
               {...register("password", { required: true })}
               name="password"
@@ -105,10 +105,10 @@ const Register = () => {
               </p>
             )}
             <button
-              className={`bg-water-blue text-white py-2 mt-5 rounded-md focus:outline-none`}
+              className={`bg-water-blue text-white py-2 mt-5 rounded-md focus:outline-none hover:shadow-md `}
               type="submit"
             >
-              Login
+              Register
             </button>
             <div className={"text-sm text-warm-gray mt-3 font-medium"}>
               Already Registered?{" "}

@@ -1,14 +1,24 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Modal from "../components/Modal";
-
+import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
+import { useHistory } from "react-router-dom";
+import API from "../Helper/Routes/api";
 const AllArticles = ({ color }) => {
   const [showModal, setShowModal] = useState(false);
   const [allarticles, setallarticles] = useState([]);
+  let history = useHistory();
 
+  const handleDelete = (e, data) => {
+    setShowModal(true);
+  };
+  const handleEdit = (e, data) => {
+    alert("Edit");
+    history.push("/edit-article");
+  };
   useEffect(() => {
     axios
-      .get("https://conduit-api-realworld.herokuapp.com/api/articles")
+      .get(API.getArticles)
       .then((res) => {
         console.log(res.data);
         setallarticles(res.data.articles);
@@ -20,8 +30,7 @@ const AllArticles = ({ color }) => {
 
   return (
     <div className={"border-red-800"}>
-      {/* {showModal ? <Modal /> : null} */}
-
+      {showModal ? <Modal /> : null}
       <div>
         <h1 className={"text-3xl ml-4 mt-4 mb-4"}>All Posts</h1>
       </div>
@@ -76,23 +85,39 @@ const AllArticles = ({ color }) => {
             <div
               className={"col-span-1 text-sm font-medium text-charcoal-gray"}
             >
-              <select
-                type=""
-                className={
-                  " w-20  text-center  px-2 py-1 text-sm text-white bg-dark-sky-blue  rounded-md outline-none"
-                }
+              <ContextMenuTrigger
+                holdToDisplay={0}
+                id="contextmenu"
+                className={"ml-3 "}
               >
-                <option
-                  className={"bg-white text-charcoal-gray"}
-                  value=""
-                  onClick={(e) => console.log("Ediiiit", e)}
+                <div
+                  className={
+                    "bg-dark-sky-blue w-16 pl-3 px-2 py-2 text-white rounded-md "
+                  }
                 >
-                  Edit{" "}
-                </option>
-                <option className={"bg-white text-charcoal-gray"} value="">
-                  Delete{" "}
-                </option>
-              </select>
+                  ...action
+                </div>
+              </ContextMenuTrigger>
+              <ContextMenu
+                id="contextmenu"
+                className={"bg-white border border-silver cursor-pointer"}
+              >
+                <MenuItem
+                  data={{ foo: "bar" }}
+                  className={
+                    "pl-1  border-b border-silver font-medium px-4 py-2"
+                  }
+                  onClick={() => alert("hiiiii")}
+                >
+                  <span>Edit</span>
+                </MenuItem>
+                <MenuItem
+                  className={"pl-2 font-medium px-2 py-2 w-32"}
+                  onClick={() => handleDelete()}
+                >
+                  <span>Delete</span>
+                </MenuItem>
+              </ContextMenu>
             </div>
           </div>
         );
