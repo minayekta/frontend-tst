@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import AllArticles from "./pages/AllArticles";
 import UserLayout from "./pages/UserLayout";
 import NewArticle from "./pages/NewArticle";
+import EditArticle from "./pages/EditArticle";
 
 function App() {
   return (
@@ -14,9 +15,10 @@ function App() {
         <Route exact path="/" component={Login} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
-        <Route exact path="/dashboard" component={Dashboard} />
+        <UserLayout exact path="/dashboard" component={Dashboard} />
         <UserLayout exact path="/all-articles" component={AllArticles} />
         <UserLayout exact path="/new-article" component={NewArticle} />
+        <UserLayout exact path="/edit-article" component={EditArticle} />
       </Switch>
     </div>
   );

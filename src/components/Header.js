@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
+
 const Header = () => {
+  let history = useHistory();
+  const [isOpen, setIsOpen] = useState(false);
+
   const [currentuser, setCurrentuser] = useState();
   // useEffect(() => {
   //   axios
@@ -13,6 +18,11 @@ const Header = () => {
   //       console.log(error);
   //     });
   // }, []);
+  const genericHamburgerLine = `h-1 w-6 my-1 rounded-full bg-black transition ease transform duration-300`;
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    history.push("/login");
+  };
   return (
     <div
       className={
@@ -24,6 +34,7 @@ const Header = () => {
           className={
             "border border-solid border-dark-sky-blue text-dark-sky-blue text-xs px-4 py-2    rounded-sm tracking-wider hover:bg-water-blue hover:text-white "
           }
+          onClick={() => handleLogout()}
         >
           Logout
         </button>
